@@ -28,10 +28,15 @@
         overlays = [ neovim-nightly-overlay.overlays.default ];
       });
     in {
-      packages = forAllSystems (system: {
-        mitos = mitos.packages.${system}.default;
-        neovim-nightly = pkgsFor.${system}.neovim;
-        default = self.packages.${system}.mitos;
-      });
+      packages = forAllSystems (system:
+        let
+          mitosPackages = mitos.packages.${system} or { };
+          neovim = pkgsFor.${system}.neovim;
+        in {
+          neovim-nightly = neovim;
+        } // nixpkgs.lib.optionalAttrs (mitosPackages ? default) {
+          mitos = mitosPackages.default;
+          default = mitosPackages.default;
+        });
     };
 }

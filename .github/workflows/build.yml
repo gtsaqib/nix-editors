@@ -17,12 +17,16 @@ jobs:
         include:
           - system: x86_64-linux
             runner: ubuntu-latest
+            mitos: true
           - system: aarch64-linux
             runner: ubuntu-24.04-arm
+            mitos: true
           - system: x86_64-darwin
             runner: macos-15-intel
+            mitos: false
           - system: aarch64-darwin
             runner: macos-latest
+            mitos: true
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
@@ -34,4 +38,8 @@ jobs:
           name: gtsaqib
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - name: Build Mitos and Neovim nightly
-        run: nix build --print-build-logs .#mitos .#neovim-nightly
+        if: ${{ matrix.mitos }}
+        run: nix build --accept-flake-config --print-build-logs .#mitos .#neovim-nightly
+      - name: Build Neovim nightly (Intel macOS)
+        if: ${{ !matrix.mitos }}
+        run: nix build --accept-flake-config --print-build-logs .#neovim-nightly
