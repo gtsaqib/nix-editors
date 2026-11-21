@@ -32,8 +32,37 @@
       neovimNightlyFor = system:
         let
           pkgs = pkgsFor.${system};
+          lib = nixpkgs.lib;
           rev = neovim-src.shortRev or "dirty";
-        in (pkgs.neovim-unwrapped.overrideAttrs (old: {
+          neovimDepsText = builtins.readFile "${neovim-src}/cmake.deps/deps.txt";
+          depMatches = builtins.filter (match: match != null) (
+            builtins.map
+              (line: builtins.match "([A-Z0-9_]+)_(URL|SHA256)[[:space:]]+([^[:space:]]+)[[:space:]]*" line)
+              (lib.splitString "\n" neovimDepsText)
+          );
+          depAttrs = builtins.foldl'
+            (acc: match:
+              let
+                name = lib.toLower (builtins.elemAt match 0);
+                key = lib.toLower (builtins.elemAt match 1);
+                value = builtins.elemAt match 2;
+              in acc // {
+                ${name} = (acc.${name} or { }) // { ${key} = value; };
+              })
+            { }
+            depMatches;
+          neovimDeps = builtins.mapAttrs (_: dep: pkgs.fetchurl dep) depAttrs;
+          treeSitterParserSources = lib.filterAttrs
+            (name: _: lib.hasPrefix "treesitter_" name && !(lib.hasSuffix "_wasm" name))
+            neovimDeps;
+          treeSitterParsers = lib.mapAttrs'
+            (name: src: lib.nameValuePair (lib.removePrefix "treesitter_" name) { inherit src; })
+            treeSitterParserSources;
+        in (pkgs.neovim-unwrapped.override {
+          # Build parser grammars from the exact revisions pinned by Neovim.
+          # Nixpkgs' parser pins can lag behind and fail Neovim's own tests.
+          treesitter-parsers = treeSitterParsers;
+        }).overrideAttrs (old: {
           pname = "neovim-nightly";
           version = rev;
           src = neovim-src;
@@ -59,7 +88,7 @@
             description = "Nightly build of the Neovim text editor";
             changelog = "https://github.com/neovim/neovim/commits/master";
           };
-        }));
+        });
     in {
       packages = forAllSystems (system:
         let

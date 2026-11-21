@@ -17,19 +17,19 @@ Keep `README.md` focused on installing and using the editors.
 
 ## Updating inputs
 
-`.github/workflows/update-neovim.yml` updates only the direct `neovim-src`
-input daily, builds the result on all supported systems, then commits the
-updated `flake.lock` directly to the default branch after successful builds.
-It does not open a pull request. Run `nix flake update neovim-src` to update
-that input manually. Run `nix flake update mitos` to update Mitos. Review and
-commit the resulting `flake.lock` with manual changes.
+`.github/workflows/update-editors.yml` updates the direct `mitos` and
+`neovim-src` inputs daily, builds both editors on all supported systems, then
+commits the updated `flake.lock` directly to the default branch after successful
+builds. It does not open a pull request. Run `nix flake update mitos neovim-src`
+to update those inputs manually. Review and commit the resulting `flake.lock`
+with manual changes.
 
 ## GitHub Actions and Cachix
 
 `.github/workflows/build.yml` builds supported editor/architecture pairs on
 push, pull request, and manual dispatch. The scheduled update workflow also
-builds its refreshed source before committing. CI reads from the public Cachix cache
-without credentials. To upload newly built paths, configure a Cachix write
+builds refreshed sources before committing. CI reads from the public Cachix
+cache without credentials. To upload newly built paths, configure a Cachix write
 token as the repository Actions secret `CACHIX_AUTH_TOKEN`. Never place that
 token in the flake or another tracked file. The free open-source Cachix tier
 has a storage limit; older paths may be evicted.

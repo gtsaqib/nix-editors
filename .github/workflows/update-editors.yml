@@ -1,4 +1,4 @@
-name: Update Neovim nightly
+name: Update editors
 
 on:
   schedule:
@@ -16,8 +16,8 @@ jobs:
       - uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Update Neovim source pin
-        run: nix flake update neovim-src
+      - name: Update editor source pins
+        run: nix flake update mitos neovim-src
       - uses: actions/upload-artifact@v4
         with:
           name: updated-flake-lock
@@ -63,14 +63,14 @@ jobs:
           name: updated-flake-lock
           path: updated-lock
       - run: cp updated-lock/flake.lock "$GITHUB_WORKSPACE/flake.lock"
-      - name: Commit updated source pin
+      - name: Commit updated editor pins
         run: |
           if git diff --quiet -- flake.lock; then
-            echo "Neovim source pin is already current."
+            echo "Editor source pins are already current."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add flake.lock
-          git commit -m "flake.lock: Update Neovim nightly"
+          git commit -m "flake.lock: Update editor sources"
           git push
