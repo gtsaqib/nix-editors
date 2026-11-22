@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795182821,
-        "narHash": "sha256-7cjnyHmO/lGicIse1B8t5ensrv0ZbWQ4uoHN9XKwVSE=",
+        "lastModified": 1795299211,
+        "narHash": "sha256-XTU4s332xO6A/aD07WchtxaGVYzOaCyA1U5GV6VhZOU=",
         "owner": "mitos-editor",
         "repo": "mitos",
-        "rev": "98184118176771246ef7c7f3cef6001f46f4c83b",
+        "rev": "1c42aaa2c5618605284cf96fc7880bcc8a974149",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795082216,
-        "narHash": "sha256-v7S8jpoZ6u9LZMaCHYqBnK+m8aNbsx+HHGWpKJ0p9iY=",
+        "lastModified": 1795342093,
+        "narHash": "sha256-GdpCwtb1SwiPm+CAH6rWm9ctghyh5cBabzH8XfjPuRs=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "2843068c7a9c78c206189c37b53cdb6f464e57ae",
+        "rev": "38f44e84b63009f1d3f7917b7547c4365aa0e8eb",
         "type": "github"
       },
       "original": {
@@ -36,7 +36,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs": {
       "locked": {
         "lastModified": 1795085501,
         "narHash": "sha256-S5keGWzaKpuXo9MNoIC2FfTIuTyTnx8P4NhYJMEsTLI=",
@@ -55,8 +55,8 @@
     "root": {
       "inputs": {
         "mitos": "mitos",
-        "nixpkgs": "nixpkgs_2",
-        "neovim-src": "neovim-src"
+        "neovim-src": "neovim-src",
+        "nixpkgs": "nixpkgs"
       }
     }
   },
