@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795386332,
-        "narHash": "sha256-Jbr4NmFM+ZkNGKPB9Y4L5mlJR6N+73xExHefdHI0/Dg=",
+        "lastModified": 1795513950,
+        "narHash": "sha256-Z6jc2Zh5GWV6tyCQapgGlbUiRwbC+DEJfP0b6ekZNqc=",
         "owner": "mitos-editor",
         "repo": "mitos",
-        "rev": "fea3aed04404257bc37dd15cc7da1f69fe9ede9c",
+        "rev": "51a0b9a17c7671f497ab38be3b6ed0e3353fc3d7",
         "type": "github"
       },
       "original": {
@@ -23,11 +23,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795401887,
-        "narHash": "sha256-gekFojMM9cwqlOJajvZxoMyHS4pZS/zKjtvp4aL/fvg=",
+        "lastModified": 1795522739,
+        "narHash": "sha256-nb0GzAabtJ9nwsz7KveGov0hs2pacHyZxJ2ydb7DKU0=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "b091c9b0a030d78ec58022491c78489826e2763d",
+        "rev": "e06f5299e24f1cc539802cffbca8a53410d0c548",
         "type": "github"
       },
       "original": {
